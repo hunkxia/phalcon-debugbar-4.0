@@ -7,7 +7,7 @@
 
 namespace Snowair\Debugbar\Phalcon\Cache;
 
-use Phalcon\Cache\Adapter\AdapterInterface as CacheAdapterInterface;
+use Phalcon\Cache as CacheAdapterInterface;
 use Phalcon\Exception;
 use Phalcon\Storage\Serializer\Base64;
 use Phalcon\Storage\Serializer\Msgpack;
@@ -70,7 +70,7 @@ trait ProxyTrait
         throw new Exception("Method '{$name}' not found on " . get_class($this->_backend));
     }
 
-    public function get(string $key, $defaultValue = null)
+    public function get($key, $defaultValue = null)
     {
         return $this->call('get', array($key, $defaultValue));
     }
@@ -82,32 +82,32 @@ trait ProxyTrait
      * @return bool
      * @deprecated BC for app cache proxy/decorator classes
      */
-    public function save(string $keyName, $content, $ttl = null): bool
+    public function save($keyName, $content, $ttl = null): bool
     {
         return $this->call('save', array($keyName, $content, $ttl));
     }
 
-    public function set(string $keyName, $content, $ttl = null): bool
+    public function set($keyName, $content, $ttl = null): bool
     {
         return $this->call('set', array($keyName, $content, $ttl));
     }
 
-    public function delete(string $keyName): bool
+    public function delete($keyName): bool
     {
         return $this->call('delete', array($keyName));
     }
 
-    public function increment(string $key, int $value = 1)
+    public function increment($key, int $value = 1)
     {
         return $this->call('increment', array($key, $value));
     }
 
-    public function decrement(string $key, int $value = 1)
+    public function decrement($key, int $value = 1)
     {
         return $this->call('decrement', array($key, $value));
     }
 
-    public function getKeys(string $prefix = ''): array
+    public function getKeys($prefix = ''): array
     {
         return $this->_backend->getKeys($prefix);
     }
@@ -117,7 +117,7 @@ trait ProxyTrait
      * @return bool
      * @deprecated BC for app cache proxy/decorator classes
      */
-    public function exists(string $keyName = null): bool
+    public function exists($keyName = null): bool
     {
         return $this->_backend->has($keyName);
     }
@@ -137,7 +137,7 @@ trait ProxyTrait
         return $this->_backend->getPrefix();
     }
 
-    public function has(string $key): bool
+    public function has($key): bool
     {
         return $this->_backend->has($key);
     }

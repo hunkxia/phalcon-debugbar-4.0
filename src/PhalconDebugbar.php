@@ -273,21 +273,21 @@ class PhalconDebugbar extends DebugBar
             $collector = new CacheCollector($mode, $mc);
             $this->addCollector($collector);
         }
+
         $backend = $this->di->get($cacheService);
+
         /*
          * When detecting cache service, we must ensure it is not a decorator implementing
          *  \Phalcon\Cache\Adapter\AdapterInterface, but rather an implementation (or abstract class) of the interface.
          * Since the cache adapters' implementations extend their own storage adapter, we can assume that that is
          *  the non-decorated implementation of cache adapter interface.
          */
-        if ($backend instanceof AbstractStorageAdapter) {
-            if ($this->shouldCollect('cache', false)) {
-                $this->di->remove($cacheService);
-                $self = $this;
-                $this->di->set($cacheService, function () use ($self, $backend, $collector) {
-                    return $self->createProxy(clone $backend, $collector);
-                });
-            }
+        if ($this->shouldCollect('cache', false)) {
+            $this->di->remove($cacheService);
+            $self = $this;
+            $this->di->set($cacheService, function () use ($self, $backend, $collector) {
+                return $self->createProxy(clone $backend, $collector);
+            });
         }
     }
 
@@ -703,7 +703,7 @@ PROXY_CLASS;
                 ) {
                     $profiler->setDb($db);
                     if ($event->getType() == 'beforeQuery') {
-                        $sql = $db->getRealSQLStatement();
+                        $sql = $db->getSQLStatement();
                         $bindTypes = $db->getSQLBindTypes();
                         if (stripos(strtr($sql, [' ' => '']), 'SELECTIF(COUNT(*)>0,1,0)FROM`INFORMATION_SCHEMA`.`TABLES`') === false
                             && stripos($sql, 'DESCRIBE') !== 0) {
@@ -718,7 +718,7 @@ PROXY_CLASS;
                         }
                     }
                     if ($event->getType() == 'afterQuery') {
-                        $sql = $db->getRealSQLStatement();
+                        $sql = $db->getSQLStatement();
                         if (stripos(strtr($sql, [' ' => '']), 'SELECTIF(COUNT(*)>0,1,0)FROM`INFORMATION_SCHEMA`.`TABLES`') === false
                             && stripos($sql, 'DESCRIBE') !== 0) {
                             $profiler->stopProfile();

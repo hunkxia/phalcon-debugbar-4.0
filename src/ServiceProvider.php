@@ -41,7 +41,7 @@ class ServiceProvider extends Injectable {
 			$base =new Php(__DIR__ . '/config/debugbar.php');
             $base['collectors']['phpinfo']=true;
             $base['collectors']['time']=true;
-            $base['collectors']['messages']=true;
+			$base['collectors']['messages']=true;
 			if ( is_string($configPath) && is_file($configPath) ) {
 				$extension = strtolower(pathinfo($configPath, PATHINFO_EXTENSION));
 
