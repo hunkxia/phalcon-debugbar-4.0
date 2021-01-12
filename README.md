@@ -7,6 +7,7 @@
 
 Integrates [PHP Debug Bar](https://github.com/maximebf/php-debugbar) with [Phalcon Framework](https://github.com/phalcon/cphalcon).
 
+Fix for phalcon 4.0
 
 [中文说明](https://github.com/snowair/phalcon-debugbar/blob/master/README_zh.md)
 
